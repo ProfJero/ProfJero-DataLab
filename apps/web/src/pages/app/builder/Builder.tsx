@@ -87,6 +87,17 @@ function Editor({ form }: { form: FormDetail }) {
   const [publishing, setPublishing] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>(null);
   const answered = useMemo(() => new Set(form.answeredQuestionIds), [form.answeredQuestionIds]);
+  // Offer to restore a local backup of edits that never reached the server (e.g. closed tab while offline).
+  const [backup, setBackup] = useState<{ at: number; def: FormDefinition } | null>(() => {
+    try {
+      const raw = localStorage.getItem(`datalab.draft.${form.id}`);
+      if (!raw) return null;
+      const b = JSON.parse(raw) as { at: number; def: FormDefinition };
+      return b.at > new Date(form.updatedAt).getTime() + 1000 && JSON.stringify(b.def) !== JSON.stringify(form.definition) ? b : null;
+    } catch {
+      return null;
+    }
+  });
 
   const labels = useMemo(() => {
     const m = new Map<string, string>();
@@ -193,6 +204,13 @@ function Editor({ form }: { form: FormDetail }) {
         <Button variant="secondary" size="icon-sm" className="lg:hidden" onClick={() => setMobilePanel(true)} aria-label="Open settings panel"><Settings2 /></Button>
       </header>
       {b.state === "conflict" && <div className="bg-amber-50 px-4 py-2 text-center text-sm text-amber-900">This form was modified in another tab or by a teammate. Your latest edits are kept locally — <button className="font-semibold underline" onClick={() => window.location.reload()}>reload</button> to continue.</div>}
+      {backup && canEdit && (
+        <div className="flex flex-wrap items-center justify-center gap-3 bg-brand-50 px-4 py-2 text-sm text-brand-800">
+          Unsaved changes from {timeAgo(new Date(backup.at))} were found on this device.
+          <Button size="sm" onClick={() => { b.update(() => backup.def); setBackup(null); toast.success("Changes restored"); }}>Restore</Button>
+          <Button size="sm" variant="ghost" onClick={() => { localStorage.removeItem(`datalab.draft.${form.id}`); setBackup(null); }}>Discard</Button>
+        </div>
+      )}
       {!canEdit && <div className="bg-slate-100 px-4 py-2 text-center text-sm text-ink-muted">{form.status === "archived" ? "This form is archived. Restore it from the forms list to edit." : "You have view-only access to this form."}</div>}
 
       <div className="flex min-h-0 flex-1">

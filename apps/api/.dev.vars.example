@@ -1,0 +1,10 @@
+# Local secrets for `wrangler dev` (copy to .dev.vars — never commit .dev.vars).
+SUPABASE_ANON_KEY=your-anon-jwt-key
+GATEWAY_KEY=must-match-private.app_secrets.gateway_key
+FINGERPRINT_SALT=random-hex
+# Optional integrations
+AI_API_KEY=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+EMAIL_API_KEY=
+PAYSTACK_SECRET_KEY=

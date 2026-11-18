@@ -133,8 +133,13 @@ try {
     });
     await step("build questions in the builder with autosave", async () => {
       const add = async (type) => {
+        await page.waitForTimeout(400);
         await page.getByRole("button", { name: "Add question" }).last().click();
-        await page.getByRole("button", { name: type, exact: true }).click();
+        const item = page.getByRole("button", { name: type, exact: true });
+        await item.waitFor();
+        await item.scrollIntoViewIfNeeded();
+        await item.click();
+        await item.waitFor({ state: "detached" });
       };
       await add("Single choice");
       await page.getByLabel("Question title", { exact: true }).last().fill("Which network do you use most?");
@@ -159,12 +164,14 @@ try {
       await page.waitForTimeout(600);
       const titles = await page.getByLabel("Question title", { exact: true }).evaluateAll((els) => els.map((e) => e.value));
       assert.equal(titles[1], "What challenges do you face?");
+      await page.waitForTimeout(4000); // autosave debounce + network round trip
       await page.getByText("Saved", { exact: true }).waitFor({ timeout: 15000 });
     });
     await step("autosaved work survives a reload", async () => {
       await page.reload();
       await page.getByLabel("Question title", { exact: true }).first().waitFor();
       const titles = await page.getByLabel("Question title", { exact: true }).evaluateAll((els) => els.map((e) => e.value));
+      console.log("    titles after reload:", JSON.stringify(titles));
       assert.deepEqual(titles, ["Which network do you use most?", "What challenges do you face?", "How satisfied are you?"]);
     });
     await step("publish the form", async () => {
@@ -222,8 +229,8 @@ try {
       assert.match(text, /66\.7%\s*·\s*2/, "MTN should be 2 of 3 (66.7%)");
       assert.match(text, /33\.3%\s*·\s*1/, "Telecel should be 1 of 3 (33.3%)");
       const rating = await page.locator(".card", { hasText: "How satisfied are you?" }).last().innerText();
-      assert.match(rating, /Mean\s*3\.67/);
-      assert.match(rating, /Median\s*4/);
+      assert.match(rating, /Mean\s*3\.67/i);
+      assert.match(rating, /Median\s*4/i);
       await page.screenshot({ path: `${OUT}/analytics.png`, fullPage: true });
     });
     await step("CSV export downloads all responses", async () => {
@@ -257,6 +264,12 @@ try {
       await page.getByText("E2E Network Survey").first().click();
       await page.getByRole("link", { name: "AI Analyst" }).click();
       await page.getByText(/isn't configured yet|Ask anything about/).waitFor();
+    });
+    await step("archive the test form from the forms list (keeps the suite re-runnable)", async () => {
+      await page.goto(BASE + "/app/forms");
+      await page.getByRole("button", { name: "More actions" }).first().click();
+      await page.getByRole("menuitem", { name: "Archive" }).click();
+      await page.getByText("Form archived").waitFor();
     });
     await step("mobile dashboard has no horizontal overflow", async () => {
       const state = await ctx.storageState();
