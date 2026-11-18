@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --border: 214 32% 91%;
+    --background: 220 33% 97%;
+    --foreground: 222 47% 11%;
+    color-scheme: light;
+  }
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-canvas text-ink antialiased font-sans; font-feature-settings: "cv11", "ss01"; }
+  h1, h2, h3, h4 { @apply text-navy tracking-tight; }
+  :focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(40,100,197,.35); border-radius: 6px; }
+  ::selection { background: #D9E6FA; }
+}
+
+@layer components {
+  .card { @apply bg-white rounded-xl border border-line shadow-card; }
+  .label { @apply text-sm font-medium text-navy; }
+  .muted { @apply text-ink-muted; }
+  .kbd { @apply rounded border border-line bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-ink-muted; }
+  .prose-dl h1 { @apply text-2xl font-semibold mt-6 mb-3; }
+  .prose-dl h2 { @apply text-xl font-semibold mt-5 mb-2; }
+  .prose-dl h3 { @apply text-base font-semibold mt-4 mb-2; }
+  .prose-dl p { @apply my-2 leading-relaxed; }
+  .prose-dl ul { @apply list-disc pl-5 my-2 space-y-1; }
+  .prose-dl ol { @apply list-decimal pl-5 my-2 space-y-1; }
+  .prose-dl blockquote { @apply border-l-4 border-amber-300 bg-amber-50 px-3 py-2 my-3 rounded-r text-amber-900; }
+  .prose-dl strong { @apply font-semibold text-navy; }
+  .prose-dl code { @apply rounded bg-canvas px-1 text-[0.9em]; }
+  .prose-dl table { @apply w-full text-sm my-3; }
+  .prose-dl th, .prose-dl td { @apply border border-line px-2 py-1 text-left; }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+  .print-page { box-shadow: none !important; border: 0 !important; }
+  .break-inside-avoid { break-inside: avoid; }
+}

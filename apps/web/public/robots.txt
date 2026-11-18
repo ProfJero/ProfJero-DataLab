@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /app
+Disallow: /admin
+Disallow: /auth
+Disallow: /invite
+Sitemap: https://profjero-datalab.profjerodigitalstudio.workers.dev/sitemap.xml
