@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { Logo, Endorsement } from "@/components/brand/Logo";
+import { Logo, LogoFull, Endorsement } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { cn } from "@/lib/utils";
@@ -35,7 +35,7 @@ export function MarketingLayout({ children }: { children: ReactNode }) {
       <main id="content">{children}</main>
       <footer className="border-t border-line bg-canvas">
         <div className="container grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div><Logo /><p className="mt-3 max-w-xs text-sm text-ink-muted">Smarter Surveys. Better Decisions.</p><Endorsement className="mt-4 block" /></div>
+          <div><LogoFull width={230} /><Endorsement className="mt-4 block" /></div>
           {[["Product", [["/features", "Features"], ["/templates", "Templates"], ["/pricing", "Pricing"]]], ["Company", [["/about", "About"], ["/contact", "Contact"]]], ["Legal", [["/privacy", "Privacy policy"], ["/terms", "Terms of service"]]]].map(([h, items]) => (
             <div key={h as string}><p className="text-sm font-semibold text-navy">{h as string}</p><ul className="mt-3 space-y-2">{(items as string[][]).map(([to, l]) => <li key={to}><Link to={to} className="text-sm text-ink-muted hover:text-navy">{l}</Link></li>)}</ul></div>
           ))}

@@ -1,37 +1,41 @@
 import { cn } from "@/lib/utils";
 
 /**
- * DataLab mark: a speech bubble (a question asked) holding rising bars (data collected)
- * with an insight node on the tallest bar (understanding). Works in colour, mono and as an app icon.
+ * Official ProfJero DataLab identity (supplied by ProfJero Digital Studio).
+ * Raster assets live in /public/brand; the wordmark is rendered as live text in the
+ * brand colours so it stays crisp at every size.
  */
-export function LogoMark({ size = 32, mono, className }: { size?: number; mono?: "light" | "dark"; className?: string }) {
-  const bg = mono === "light" ? "#ffffff" : mono === "dark" ? "#112442" : "#112442";
-  const bubble = mono ? (mono === "light" ? "#112442" : "#ffffff") : "#2864C5";
-  const bars = mono === "dark" ? "#112442" : "#ffffff";
-  const node = mono ? bars : "#20A47A";
-  return (
-    <svg width={size} height={size} viewBox="0 0 64 64" className={className} role="img" aria-label="ProfJero DataLab">
-      <rect width="64" height="64" rx="14" fill={bg} />
-      <path d="M14 20a6 6 0 0 1 6-6h24a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H29l-9 7v-7a6 6 0 0 1-6-6z" fill={bubble} />
-      <rect x="21" y="30" width="5" height="8" rx="1.5" fill={bars} />
-      <rect x="29.5" y="25" width="5" height="13" rx="1.5" fill={bars} />
-      <rect x="38" y="20.5" width="5" height="17.5" rx="1.5" fill={bars} opacity=".55" />
-      <circle cx="40.5" cy="17.5" r="4" fill={node} stroke={bg} strokeWidth="2" />
-    </svg>
-  );
+export function LogoMark({ size = 32, className, tile }: { size?: number; className?: string; tile?: boolean }) {
+  if (tile)
+    return (
+      <span className={cn("inline-flex shrink-0 items-center justify-center rounded-[22%] bg-white", className)} style={{ width: size, height: size }}>
+        <img src="/brand/logo-mark.png" alt="" width={size * 0.82} height={size * 0.82} style={{ width: size * 0.82, height: size * 0.82 }} />
+      </span>
+    );
+  return <img src="/brand/logo-mark.png" alt="" width={size} height={size} className={cn("shrink-0", className)} style={{ width: size, height: size }} />;
 }
 
+/** Mark + wordmark. `light` = for dark backgrounds (mark sits on a white tile). */
 export function Logo({ className, light, compact }: { className?: string; light?: boolean; compact?: boolean }) {
   return (
-    <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <LogoMark size={compact ? 28 : 32} />
+    <span className={cn("inline-flex items-center gap-2.5", className)} aria-label="ProfJero DataLab">
+      <LogoMark size={compact ? 30 : 36} tile={light} />
       {!compact && (
-        <span className={cn("text-[17px] font-semibold tracking-tight", light ? "text-white" : "text-navy")}>
-          ProfJero <span className={light ? "text-brand-200" : "text-brand"}>DataLab</span>
+        <span className="flex flex-col leading-none" aria-hidden>
+          <span className={cn("text-[15px] font-extrabold tracking-tight", light ? "text-white" : "text-navy")}>ProfJero</span>
+          <span className="text-[15px] font-extrabold tracking-tight">
+            <span className={light ? "text-brand-200" : "text-brand-600"}>Data</span>
+            <span className={light ? "text-insight-100" : "text-insight-600"}>Lab</span>
+          </span>
         </span>
       )}
     </span>
   );
+}
+
+/** Full lockup with tagline — for light backgrounds only. */
+export function LogoFull({ className, width = 280 }: { className?: string; width?: number }) {
+  return <img src="/brand/logo-full.png" alt="ProfJero DataLab — Smarter Surveys. Better Decisions." width={width} height={Math.round((width * 470) / 1345)} className={cn("h-auto", className)} style={{ width }} />;
 }
 
 export function Endorsement({ light, className }: { light?: boolean; className?: string }) {

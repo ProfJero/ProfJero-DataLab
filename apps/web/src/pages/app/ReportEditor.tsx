@@ -14,7 +14,7 @@ import { buildXlsx } from "@/lib/xlsx";
 import { dbMessage, supabase } from "@/lib/supabase";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { downloadBlob, fmtDate } from "@/lib/utils";
-import { Logo } from "@/components/brand/Logo";
+import { LogoFull } from "@/components/brand/Logo";
 
 interface Section { id: string; position: number; kind: string; title: string; body: string | null; data: Record<string, unknown>; source: string }
 interface Report { id: string; title: string; type: ReportType; status: string; meta: Record<string, string>; sample_size: number; generated_at: string; report_sections: Section[] }
@@ -112,7 +112,7 @@ export default function ReportEditor() {
       </div>
       <article className="print-page mx-auto max-w-[820px] rounded-2xl border border-line bg-white px-6 py-10 shadow-card sm:px-14">
         <header className="border-b border-line pb-8">
-          <div className="flex items-center justify-between"><Logo compact /><span className="text-xs text-ink-muted">{REPORT_TYPE_LABELS[r.type]}</span></div>
+          <div className="flex items-center justify-between"><LogoFull width={170} /><span className="text-xs text-ink-muted">{REPORT_TYPE_LABELS[r.type]}</span></div>
           <h1 className="mt-8 text-3xl font-semibold leading-tight">{r.title}</h1>
           <dl className="mt-4 grid grid-cols-2 gap-y-1 text-sm text-ink-muted sm:grid-cols-4">
             {r.meta.organisation && <><dt className="sr-only">Organisation</dt><dd>{r.meta.organisation}</dd></>}

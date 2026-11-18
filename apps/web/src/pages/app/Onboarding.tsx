@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { BookOpen, Briefcase, Church, FlaskConical, HandHeart, MoreHorizontal, User } from "lucide-react";
-import { Logo } from "@/components/brand/Logo";
+import { LogoFull } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/input";
 import { rpc } from "@/lib/supabase";
@@ -52,7 +52,7 @@ export default function Onboarding() {
   return (
     <div className="min-h-screen bg-canvas">
       <div className="mx-auto flex max-w-xl flex-col px-4 py-10">
-        <Logo />
+        <LogoFull width={200} />
         <div className="mt-10 flex gap-2" aria-label={`Step ${step + 1} of 3`}>{[0, 1, 2].map((i) => <span key={i} className={cn("h-1.5 flex-1 rounded-full", i <= step ? "bg-brand" : "bg-slate-200")} />)}</div>
         <div className="card mt-6 p-6 sm:p-8">
           {step === 0 && (

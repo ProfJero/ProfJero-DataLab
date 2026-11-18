@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { BarChart3, CheckCircle2, Eye, EyeOff, MailCheck, ShieldAlert, Sparkles } from "lucide-react";
-import { Logo, Endorsement } from "@/components/brand/Logo";
+import { LogoFull, Endorsement } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/misc";
@@ -21,7 +21,7 @@ function AuthLayout({ title, subtitle, children, footer }: { title: string; subt
   return (
     <div className="grid min-h-screen lg:grid-cols-[1fr_1.05fr]">
       <div className="flex flex-col px-6 py-8 sm:px-12">
-        <Link to="/"><Logo /></Link>
+        <Link to="/" className="w-fit"><LogoFull width={210} /></Link>
         <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-10">
           <h1 className="text-2xl font-semibold">{title}</h1>
           {subtitle && <p className="mt-2 text-sm text-ink-muted">{subtitle}</p>}

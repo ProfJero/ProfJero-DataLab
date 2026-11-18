@@ -34,7 +34,7 @@ export function layout(title: string, body: string, cta?: { label: string; url: 
   return `<!doctype html><html><body style="margin:0;background:#F5F7FB;font-family:Inter,Segoe UI,Arial,sans-serif;color:#112442">
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px">
 <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fff;border-radius:12px;padding:32px">
-<tr><td style="font-weight:700;font-size:18px;color:#112442">ProfJero <span style="color:#2864C5">DataLab</span></td></tr>
+<tr><td>${cta ? `<img src="${esc(new URL(cta.url).origin)}/brand/logo-full.png" width="200" alt="ProfJero DataLab" style="display:block;width:200px;height:auto" />` : `<span style="font-weight:700;font-size:18px;color:#112442">ProfJero <span style="color:#1F51A6">Data</span><span style="color:#178563">Lab</span></span>`}</td></tr>
 <tr><td style="padding-top:24px;font-size:20px;font-weight:600">${esc(title)}</td></tr>
 <tr><td style="padding-top:12px;font-size:15px;line-height:1.6;color:#334155">${body}</td></tr>
 ${cta ? `<tr><td style="padding-top:24px"><a href="${esc(cta.url)}" style="background:#2864C5;color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;display:inline-block">${esc(cta.label)}</a></td></tr>` : ""}

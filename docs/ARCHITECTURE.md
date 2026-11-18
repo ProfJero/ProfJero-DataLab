@@ -47,3 +47,6 @@ Single-series charts use brand blue; Likert uses a diverging scale with a neutra
 
 ## Deployment model
 See [DEPLOYMENT.md](DEPLOYMENT.md). The web Worker serves releases from Workers KV (uploaded through an authenticated `/__deploy` endpoint) because this environment has no Cloudflare API token; with a token you can switch to Workers Static Assets.
+
+## Brand assets
+The official logo (supplied by ProfJero Digital Studio) is in `apps/web/public/brand/`: `logo-full.png` (lockup with tagline, transparent — light backgrounds only), `logo-mark.png` (symbol), `icon-32/48/192/512.png` (white app tiles), plus `favicon.ico`, `apple-touch-icon.png` and `og-image.png` in `public/`. `components/brand/Logo.tsx` renders the mark with a live-text wordmark (ProfJero navy, Data blue, Lab green); on dark surfaces the mark sits on a white tile so the navy “J” stays visible.

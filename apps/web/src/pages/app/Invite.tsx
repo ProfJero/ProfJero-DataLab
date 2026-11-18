@@ -2,7 +2,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Logo } from "@/components/brand/Logo";
+import { LogoFull } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/misc";
 import { rpc } from "@/lib/supabase";
@@ -22,7 +22,7 @@ export default function Invite() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-canvas px-4">
       <div className="card w-full max-w-md p-8 text-center">
-        <div className="flex justify-center"><Logo /></div>
+        <div className="flex justify-center"><LogoFull width={220} /></div>
         {invalid ? (
           <>
             <h1 className="mt-8 text-xl font-semibold">This invitation is no longer valid</h1>
